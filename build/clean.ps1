@@ -1,0 +1,1 @@
+Remove-Item "$PSScriptRoot/psgallery" -Recurse -Force
