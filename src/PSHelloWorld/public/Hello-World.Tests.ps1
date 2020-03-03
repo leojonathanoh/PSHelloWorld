@@ -4,12 +4,18 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 
 Describe "Hello-World" {
 
-    It 'Says Hello' {
-        Mock Write-Host  { return 1;}
+    It 'Says "Hello World!"' {
+        $actual = Hello-World 6>&1
 
-        $actual = Hello-World
+        $actual | Should -Be "Hello World!"
+    }
 
-        $actual | Should Be 1
+    It 'Uses Write-Host' {
+        Mock Write-Host {}
+
+        Hello-World
+
+        Assert-MockCalled Write-Host -Times 1
     }
 
 }
