@@ -1,0 +1,108 @@
+name: ci
+
+on:
+  push:
+    branches:
+    - '**'
+    tags:
+    - '**'
+  pull_request:
+    branches:
+    - '**'
+
+jobs:
+  test-ubuntu-18-04-pwsh:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Display system info (linux)
+      run: |
+        set -e
+        hostname
+        whoami
+        cat /etc/*release
+        lscpu
+        free
+        df -h
+        pwd
+    - name: Test
+      run: |
+        pwsh -Command 'test/test.ps1'
+  test-ubuntu-16-04-pwsh:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Display system info (linux)
+      run: |
+        set -e
+        hostname
+        whoami
+        cat /etc/*release
+        lscpu
+        free
+        df -h
+        pwd
+    - name: Test
+      run: |
+        pwsh -Command 'test/test.ps1'
+  test-windows-2019-pwsh:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - name: Display system info (windows)
+      run: |
+        hostname
+        whoami
+        systeminfo
+        Get-PSDrive
+        Get-Location
+        # pwsh version
+        $PSVersionTable
+        # Windows Powershell version?
+        powershell -Command '$PSVersionTable'
+    - name: Test
+      run: |
+        pwsh -Command 'test/test.ps1'
+  test-windows-2019-powershell:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - name: Display system info (windows)
+      run: |
+        hostname
+        whoami
+        systeminfo
+        Get-PSDrive
+        Get-Location
+        # pwsh version
+        $PSVersionTable
+        # Windows Powershell version?
+    - name: Test
+      run: |
+        powershell -Command 'test/test.ps1'
+  test-macos-10-15-pwsh:
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v1
+    - name: Display system info (darwin)
+      run: |
+        set -e
+        hostname
+        whoami
+        cat /etc/*release
+        lscpu
+        free
+        df -h
+        pwd
+    - name: Test
+      run: |
+        pwsh -Command 'test/test.ps1'
+  update-draft-release:
+    needs: [test]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: toolmantim/release-drafter@v5.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
