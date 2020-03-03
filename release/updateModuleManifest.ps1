@@ -15,7 +15,7 @@ $params = @{
     Author = $( git config user.name )
     CompanyName  = 'The Oh Brothers'
     Copyright = "Copyright (c) $( Get-Date -Format 'yyyy' ) by $( git config user.name ), licensed under Apache License 2.0"
-    Description = "A module that prints 'Hello world'!"
+    Description = "A module that prints 'Hello world!'"
     PowerShellVersion = '2.0'
     FunctionsToExport = @( Get-FunctionsToExport )
 
