@@ -89,16 +89,17 @@ jobs:
         set -e
         hostname
         whoami
-        cat /etc/*release
-        lscpu
-        free
         df -h
         pwd
     - name: Test
       run: |
         pwsh -Command 'test/test.ps1'
   update-draft-release:
-    needs: [test]
+    needs:
+      - test-ubuntu-18-04-pwsh
+      - test-ubuntu-16-04-pwsh
+      - test-windows-2019-powershell
+      - test-macos-10-15-pwsh
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
