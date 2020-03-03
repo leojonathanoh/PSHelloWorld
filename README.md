@@ -1,3 +1,3 @@
 # PSHelloWorld
 
-A module that prints 'Hello world'!
+A module that prints 'Hello world!'.

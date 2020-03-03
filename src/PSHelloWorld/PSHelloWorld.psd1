@@ -30,7 +30,7 @@ CompanyName = 'The Oh Brothers'
 Copyright = 'Copyright (c) 2020 by Leo, licensed under Apache License 2.0'
 
 # Description of the functionality provided by this module
-Description = 'A module that prints ''Hello world''!'
+Description = 'A module that prints ''Hello world!'''
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '2.0'
