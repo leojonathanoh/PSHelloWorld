@@ -14,7 +14,7 @@ jobs:
   test-ubuntu-18-04-pwsh:
     runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Display system info (linux)
       run: |
         set -e
@@ -31,7 +31,7 @@ jobs:
   test-ubuntu-16-04-pwsh:
     runs-on: ubuntu-16.04
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Display system info (linux)
       run: |
         set -e
@@ -48,7 +48,7 @@ jobs:
   test-windows-2019-pwsh:
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Display system info (windows)
       run: |
         hostname
@@ -66,7 +66,7 @@ jobs:
   test-windows-2019-powershell:
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Display system info (windows)
       run: |
         hostname
@@ -80,11 +80,13 @@ jobs:
         powershell -Command '$PSVersionTable'
     - name: Test
       run: |
+        # Ensure Windows Powershell's PSModulePath is set correctly, or else it will inherit it from pwsh and fail to import modules
+        $env:PSModulePath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules;$env:ProgramW6432\WindowsPowershell\Modules;$env:SystemRoot\System32\WindowsPowershell\v1.0\Modules"
         powershell -Command 'test/test.ps1'
   test-macos-10-15-pwsh:
     runs-on: macos-10.15
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Display system info (darwin)
       run: |
         set -e
